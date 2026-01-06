@@ -1,0 +1,12 @@
+.ilustration-card {
+  width: 400px;
+  min-width: 400px;
+}
+
+.ilustration-card .card-img-top {
+  height: 200px;
+}
+.imagendiv {
+  background-size: cover;         
+  background-repeat: no-repeat;  
+}
