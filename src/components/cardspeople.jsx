@@ -13,10 +13,15 @@ export const PeopleCard = ({ person }) => {
 
   return (
     <div className="card ilustration-card">
-      <div
-        className="imagendiv bg-secondary text-center text-light d-flex align-items-center justify-content-center card-img-top"
-        style={{ backgroundImage: `url(${imageUrl})` }}
-      ></div>
+      <div className="imagendiv">
+        <img
+          src={imageUrl}
+          alt={person.name}
+          onError={(e) =>
+            (e.target.src = "https://via.placeholder.com/400x300?text=No+Image")
+          }
+        />
+      </div>
 
       <div className="card-body">
         <h5 className="card-title">{person.name}</h5>
@@ -57,7 +62,9 @@ export const PeopleCard = ({ person }) => {
               }
             }}
           >
-            <i className={isFavorite ? "fa-solid fa-heart" : "fa-regular fa-heart"} />
+            <i
+              className={isFavorite ? "fa-solid fa-heart" : "fa-regular fa-heart"}
+            />
           </button>
         </div>
       </div>

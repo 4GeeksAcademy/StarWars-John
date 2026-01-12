@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer";
+import { useNavigate } from "react-router-dom";
 
 export const PlanetCard = ({ planet }) => {
   const { store, dispatch } = useGlobalReducer();
@@ -13,29 +13,35 @@ export const PlanetCard = ({ planet }) => {
 
   return (
     <div className="card ilustration-card">
-      <div
-        className="imagendiv bg-secondary text-center text-light d-flex align-items-center justify-content-center card-img-top"
-        style={{
-          backgroundImage: `url(${imageUrl})`,
-        }}
-      ></div>
+      <div className="imagendiv">
+        <img
+          src={imageUrl}
+          alt={planet.name}
+          onError={(e) =>
+            (e.target.src = "https://via.placeholder.com/400x300?text=No+Image")
+          }
+        />
+      </div>
 
       <div className="card-body">
         <h5 className="card-title">{planet.name}</h5>
+
         <p className="card-text mb-1">
           <strong>Climate:</strong> {planet.climate}
         </p>
         <p className="card-text mb-1">
           <strong>Terrain:</strong> {planet.terrain}
         </p>
-        <p className="card-text mb-1">
+        <p className="card-text mb-3">
           <strong>Population:</strong> {planet.population}
         </p>
 
         <div className="d-flex justify-content-between">
           <button
             className="btn btn-outline-primary btn-sm"
-            onClick={() => navigate(`/planet/${planet.uid}`, { state: { planet } })}
+            onClick={() =>
+              navigate(`/planet/${planet.uid}`, { state: { planet } })
+            }
           >
             Learn more!
           </button>
@@ -46,17 +52,19 @@ export const PlanetCard = ({ planet }) => {
               if (isFavorite) {
                 dispatch({
                   type: "remove_favorite",
-                  payload: { uid: planet.uid, type: "planets" },
+                  payload: { uid: planet.uid, type: "planets" }
                 });
               } else {
                 dispatch({
                   type: "add_favorite",
-                  payload: { ...planet, type: "planets" },
+                  payload: { ...planet, type: "planets" }
                 });
               }
             }}
           >
-            <i className={isFavorite ? "fa-solid fa-heart" : "fa-regular fa-heart"}></i>
+            <i
+              className={isFavorite ? "fa-solid fa-heart" : "fa-regular fa-heart"}
+            />
           </button>
         </div>
       </div>

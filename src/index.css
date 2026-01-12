@@ -3,10 +3,26 @@
   min-width: 400px;
 }
 
-.ilustration-card .card-img-top {
-  height: 200px;
-}
 .imagendiv {
-  background-size: cover;         
-  background-repeat: no-repeat;  
+  position: relative;
+  width: 100%;
+  padding-top: 75%; 
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imagendiv img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  object-position: center 10%;
+}
+
+.ilustration-card .card-body {
+  padding: 1rem;
 }
