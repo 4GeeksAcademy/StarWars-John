@@ -1,19 +1,19 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import useGlobalReducer from "../hooks/useGlobalReducer";
 
-const CharacterDetail = () => {
+const VehicleDetail = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { store, dispatch } = useGlobalReducer();
 
-  const person = location.state?.person;
+  const vehicle = location.state?.vehicle;
 
-  if (!person) {
+  if (!vehicle) {
     return (
       <div className="container mt-5">
-        <p>No se encontró información del personaje.</p>
-        <button className="btn btn-link" onClick={() => navigate(-1)}>
-          ← Back
+        <h2>Vehicle not found</h2>
+        <button className="btn btn-primary" onClick={() => navigate("/")}>
+          Go back to Home
         </button>
       </div>
     );
@@ -21,18 +21,21 @@ const CharacterDetail = () => {
 
   const {
     name,
-    gender,
-    hair_color,
-    eye_color,
-    height,
-    mass,
-    birth_year,
-    skin_color
-  } = person;
+    model,
+    manufacturer,
+    length,
+    crew,
+    passengers,
+    cost_in_credits,
+    uid
+  } = vehicle;
 
   const isFavorite = store.favorites.some(
-    fav => fav.uid === person.uid && fav.type === "people"
+    fav => fav.uid === uid && fav.type === "vehicles"
   );
+
+  const imageUrl =
+    "https://www.kindpng.com/picc/m/108-1085691_star-wars-spacecraft-transparent-free-png-star-wars.png";
 
   return (
     <div className="container mt-5">
@@ -45,11 +48,12 @@ const CharacterDetail = () => {
 
       <div className="card shadow-sm border-0">
         <div className="row g-0 align-items-stretch">
+          {/* Imagen */}
           <div className="col-md-6">
             <img
-              src={`https://raw.githubusercontent.com/breatheco-de/swapi-images/master/public/images/people/${person.uid}.jpg`}
-              className="img-fluid h-100 w-100 object-fit-cover"
+              src={imageUrl}
               alt={name}
+              className="img-fluid h-100 w-100 object-fit-cover rounded"
             />
           </div>
 
@@ -58,10 +62,7 @@ const CharacterDetail = () => {
 
             <p className="text-muted mt-3" style={{ textAlign: "justify" }}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-              veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-              ea commodo consequat. Duis aute irure dolor in reprehenderit in
-              voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+              tempor incididunt ut labore et dolore magna aliqua.
             </p>
 
             <button
@@ -72,12 +73,12 @@ const CharacterDetail = () => {
                 if (isFavorite) {
                   dispatch({
                     type: "remove_favorite",
-                    payload: { uid: person.uid, type: "people" }
+                    payload: { uid, type: "vehicles" },
                   });
                 } else {
                   dispatch({
                     type: "add_favorite",
-                    payload: { ...person, type: "people" }
+                    payload: { ...vehicle, type: "vehicles" },
                   });
                 }
               }}
@@ -90,26 +91,31 @@ const CharacterDetail = () => {
           </div>
         </div>
 
+
         <div className="row g-0 bg-danger text-white text-center py-3">
           <div className="col">
-            <strong>Height</strong>
-            <div>{height}</div>
+            <strong>Model</strong>
+            <div>{model}</div>
           </div>
           <div className="col">
-            <strong>Gender</strong>
-            <div>{gender}</div>
+            <strong>Manufacturer</strong>
+            <div>{manufacturer}</div>
           </div>
           <div className="col">
-            <strong>Eye Color</strong>
-            <div>{eye_color}</div>
+            <strong>Length</strong>
+            <div>{length}</div>
           </div>
           <div className="col">
-            <strong>Birth Year</strong>
-            <div>{birth_year}</div>
+            <strong>Crew</strong>
+            <div>{crew}</div>
           </div>
           <div className="col">
-            <strong>Skin Color</strong>
-            <div>{skin_color}</div>
+            <strong>Passengers</strong>
+            <div>{passengers}</div>
+          </div>
+          <div className="col">
+            <strong>Cost</strong>
+            <div>{cost_in_credits}</div>
           </div>
         </div>
       </div>
@@ -117,4 +123,4 @@ const CharacterDetail = () => {
   );
 };
 
-export default CharacterDetail;
+export default VehicleDetail;
